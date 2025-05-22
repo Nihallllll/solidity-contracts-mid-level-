@@ -44,6 +44,14 @@ contract Contract {
 
         proposals[proposalId].voteCount++;
         proposalVoteCnt[proposalId]++;
+
+    //      Suppose proposalId = 2:
+
+    // Initial State: voterRegistry[msg.sender] = 0 (no votes).
+    // Mask Creation: 1 << 2 = 000...00100 (1 in the 3rd bit position).
+    // Check Vote: 0 & 000...00100 = 0, so the user hasn’t voted, and the require passes.
+    // Record Vote: 0 | 000...00100 = 000...00100, updates voterRegistry[msg.sender] to indicate a vote for proposal 2.
+    // Subsequent Vote: If the user tries to vote again, (000...00100 & 000...00100) = 000...00100, which is non-zero, so the require reverts with "Already voted."
     }
 
 
